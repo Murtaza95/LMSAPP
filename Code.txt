@@ -1,0 +1,83 @@
+import React from 'react';
+import {Input} from'react-native-elements';
+import { StyleSheet, Text, View,ActivityIndicator,Alert,Button } from 'react-native';
+import {baseUrl} from './MyComponents/URL/baseUrl'
+
+export default class App extends React.Component {
+  constructor(props)
+  {
+    super(props);
+    this.state={
+      name:'',
+      roll:'',
+      class:'',
+      isLoading:true
+       
+    }
+  }
+  componentDidMount() {
+    fetch(baseUrl)
+        .then((response) => response.json())
+        .then((res) => {
+            console.warn("Data From APi",res)
+           this.setState({
+            name:res.Name,
+            roll:res.Roll,
+            class:res.Class,
+            isloading:false
+
+          })
+        })
+}
+_onPressButtonPOST() {
+  fetch("http://192.168.10.9:8084/LMS/rest/student/"+this.state.roll)
+  .then((response) => response.json())
+  .then((res) => {
+    this.setState({
+      name:res.Name,
+      roll:res.Roll,
+      class:res.Class
+
+    })
+          Alert.alert(
+         "POST Response",
+         "Name :"+this.state.name+"\n"+"Class:"+this.state.class+"\n"+"Roll Number:"+this.state.roll
+          //"Response Body -> " + JSON.stringify(responseData)
+         
+      )
+  })
+  .done();
+}
+  render() {
+    return (
+      <View style={styles.container}>
+      <ActivityIndicator/>
+     <Text style={{fontSize:22}}>Displaying Data From LMS DB</Text>
+     <Text style={{fontSize:22}}>Using JAVA REST API</Text>
+     <Text style={{fontSize:20}}>Student Detail</Text>
+     <Text>Name: {this.state.name}</Text>
+    <Text>RollNumber: {this.state.roll}</Text>
+    <Text>Class: {this.state.class}</Text>
+    <Input
+              placeholder='Enter Roll Number'
+              leftIcon={{ type: 'font-awesome', name: 'user' }}
+              onChangeText={(value) => { this.setState({ roll: value }) }}
+            />
+    <Button
+    onPress={() => this._onPressButtonPOST()}
+    title="POST"
+    />
+      </View>
+    );
+   
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

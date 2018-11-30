@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "LMS",
+    "icon": "./logo.png",
+    "description": "This project is really great.",
+    "slug": "LMS",
+    "privacy": "public",
+    "sdkVersion": "31.0.0",
+    "platforms": ["ios", "android"],
+    "version": "1.0.0",
+    "slug":"LMS",
+    "orientation": "portrait",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "macrocode.org.LMS"
+    },
+    "android": {
+      "package": "macrocode.org.LMS"
+    }
+  }
+}
